@@ -103,8 +103,6 @@ For Podman:
 podman-compose up -d
 ```
 
-The API is available at `http://127.0.0.1:8000`, and interactive
-documentation is available at `http://127.0.0.1:8000/docs`.
 
 ### Environment
 
@@ -116,9 +114,6 @@ DATABASE_URL=postgresql+asyncpg://orderflow:orderflow@localhost:5432/orderflow
 
 Docker Compose provisions Redis on port `6379`, but Redis is not currently
 connected to the application.
-
-Additional infrastructure instructions are in
-[docs/setup/DOCKER_SETUP.md](docs/setup/DOCKER_SETUP.md).
 
 ## Health Endpoint
 
@@ -140,13 +135,10 @@ and application uptime.
 
 ## Documentation
 
-- [Development roadmap](docs/setup/ROADMAP.md)
-- [Implementation summary](docs/setup/IMPLEMENTATION_SUMMARY.md)
 - [Database documentation](docs/database/README.md)
 - [PostgreSQL schema snapshot](docs/database/orderflow_schema.sql)
 - [Editable database ERD](docs/database/order_flow_database.excalidraw)
 - [Database ERD image](docs/database/orderflow_erd.png)
-- [Interview preparation](docs/setup/INTERVIEW_PREP.md)
 
 ## Implementation Status
 
@@ -176,11 +168,6 @@ and application uptime.
 - Railway deployment
 - API and release documentation
 
-## Roadmap
-
-The implementation plan and detailed phase checklist are maintained in
-[docs/setup/ROADMAP.md](docs/setup/ROADMAP.md).
-
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [GPL-3.0 license](LICENSE).
