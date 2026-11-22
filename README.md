@@ -74,6 +74,9 @@ to participate in one transaction.
 orderflow_backend/
 ├── models/                  SQLAlchemy ORM models
 ├── repositories/            Async database data-access functions
+├── scripts/                 Repository validation utilities
+├── .githooks/               Optional local Git hooks
+├── .github/workflows/       GitHub Actions checks
 ├── docs/
 │   ├── architecture/        System and database architecture images
 │   ├── database/            ERD, editable source and SQL schema snapshot
@@ -102,7 +105,6 @@ For Podman:
 ```bash
 podman-compose up -d
 ```
-
 
 ### Environment
 
@@ -135,6 +137,9 @@ and application uptime.
 
 ## Documentation
 
+- [Development roadmap](docs/setup/ROADMAP.md)
+- [Implementation summary](docs/setup/IMPLEMENTATION_SUMMARY.md)
+- [Docker setup](docs/setup/DOCKER_SETUP.md)
 - [Database documentation](docs/database/README.md)
 - [PostgreSQL schema snapshot](docs/database/orderflow_schema.sql)
 - [Editable database ERD](docs/database/order_flow_database.excalidraw)
@@ -167,6 +172,51 @@ and application uptime.
 - GitHub Actions CI/CD
 - Railway deployment
 - API and release documentation
+
+## Commit Messages
+
+Commit subjects must follow
+[Conventional Commits](https://www.conventionalcommits.org/), for example:
+
+```text
+feat(auth): add login endpoint
+fix(orders): handle duplicate idempotency keys
+docs(database): add schema diagram
+```
+
+Enable the local `commit-msg` hook once per clone:
+
+```bash
+git config --local core.hooksPath .githooks
+```
+
+The hook and [shared validator](scripts/check_commit_message.py) reject
+non-conforming commit subjects. The
+[GitHub Actions workflow](.github/workflows/conventional-commits.yml)
+validates non-merge commits on pull requests.
+
+### Enforcement status
+
+**Implemented in the repository**
+
+- Local `commit-msg` hook; each clone must enable it with the command above.
+- Pull-request CI check for Conventional Commit subjects.
+
+**Still required before enforcement is complete**
+
+1. Make GPG signing operational locally. Git is configured to sign with an
+   OpenPGP key, but `gpg` is not on `PATH` and the configured secret key is
+   not available in the local GPG keyring.
+2. Add the GPG public key to the GitHub account and confirm signed commits
+   appear as **Verified**.
+3. Configure a ruleset or branch protection for `main` that requires pull
+   requests and the **Validate commit messages** status check.
+4. Enable **Require signed commits** in that ruleset.
+
+GitHub's signed-commit requirement accepts supported signature types beyond
+GPG. If the repository must require GPG specifically, add a CI check that
+validates the signature format. Branch rulesets should also be configured to
+apply to administrators if they must not be bypassed.
 
 ## License
 
